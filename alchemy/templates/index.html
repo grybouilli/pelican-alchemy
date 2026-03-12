@@ -2,6 +2,7 @@
 
 {% block head %}
   {{ super() }}
+  
   {% if DESCRIPTION %}
     <meta name="description" content="{{ DESCRIPTION|striptags }}">
   {% endif %}

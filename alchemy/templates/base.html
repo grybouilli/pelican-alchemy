@@ -16,6 +16,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>{% block title %}| {{ SITENAME }}{% endblock %}</title>
+  <script src="/static/js/libraries/p5.min.js"></script>
+  <script src="/static/js/libraries/geomUtils.js"></script>
   <link rel="canonical" href="{{ SITEURL }}/{{ output_file }}">
 
   {% if RFG_FAVICONS %}
@@ -47,7 +49,18 @@
   </header>
 
   <div class="main">
+    <div id="selfy-holder" style="width: 20%; float:left; padding-left: 6rem;">
+      <!-- Our sketch will go here! -->
+      <script src="/static/js/sketch.js"></script>
+      <script src="/static/js/P5component.js"></script>
+      <script src="/static/js/Selfy.js"></script>
+    </div>
     <div class="container">
+      {% if output_file == 'index.html' %}
+        {% if BIO %}
+        <p class="lead">{{ BIO }}</p>
+        {% endif %}
+      {% endif %}
       <h1>{% block page_header %}{% endblock %}</h1>
       <hr>
       {% block content %}{% endblock %}
