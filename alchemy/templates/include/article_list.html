@@ -1,0 +1,46 @@
+{% macro render_articles(articles, category_name) %}
+{% set filtered = articles|selectattr("category.name", "equalto", category_name)|list %}
+{% if filtered %}
+<section class="category-block">
+    <h2>{{ category_name }}</h2>
+    <hr>
+    {% for article in filtered %}
+    <article class="row teaser">
+        <header class="col-sm-3 text-muted">
+            <ul>
+                <li title="{{ article.date.isoformat() }}">
+                    <i class="fas fa-clock"></i>
+                    {{ article.locale_date }}
+                </li>
+                <li>
+                    <i class="fas fa-folder-open"></i>
+                    <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
+                </li>
+                {% if not HIDE_AUTHORS and article.authors %}
+                <li>
+                    <i class="fas fa-user"></i>
+                    {% for author in article.authors %}
+                    <a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </li>
+                {% endif %}
+            </ul>
+        </header>
+        <div class="col-sm-9 ps-5">
+            <h4 class="title">
+                <a href="{{ SITEURL }}/{{ article.url }}">
+                    {{ article.title }}{% if article.link %} <i class="fas fa-link"></i>{% endif %}
+                </a>
+            </h4>
+            <div class="content">
+                {{ article.summary|striptags }}
+            </div>
+        </div>
+    </article>
+    {% if not loop.last %}
+    <hr>{% endif %}
+    {% endfor %}
+    <br><br>
+</section>
+{% endif %}
+{% endmacro %}
